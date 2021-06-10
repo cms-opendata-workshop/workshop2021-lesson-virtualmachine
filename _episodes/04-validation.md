@@ -82,7 +82,7 @@ scram b
 
 You can safely ignore the warning.
 
-> **IMPORTANT NOTE**: Depending on your system, there could be some issues with the shared clipboard between the host machine and the virtual machine.  This means that it is possible that you cannot copy the instructions in this episode directly into your VM session.  The quickest workaround is to use the [text dump file](files/lessonDump.txt) of the lesson. You can download this file directly in your VM, e.g., the `wget`  command, and follow along to copy the necessary commands directly from the text file.
+> **IMPORTANT NOTE**: Depending on your system, there could be some issues with the shared clipboard between the host machine and the virtual machine.  This means that it is possible that you cannot copy the instructions in this episode directly into your VM session.  The quickest workaround is to use the [text dump file](../files/lessonDump.txt) of the lesson. You can download this file directly in your VM, e.g., the `wget`  command, and follow along to copy the necessary commands directly from the text file.
 {: .testimonial}
 
 > ## Alternative solution to the clipboard problem

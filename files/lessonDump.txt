@@ -1,3 +1,4 @@
+This lesson is still being designed and assembled (Pre-Alpha version)
  Toggle navigation     [The_CMS_logo] Home
     * Code_of_Conduct
     * Setup
@@ -57,8 +58,8 @@ In practical terms, a virtual machine image is a computer file that has all the
 right ingredients to create a virtual computer inside a given host by the
 process of virtualization. This file, however, needs to be decoded and run by a
 virtual machine interpreter, usually known as hypervisor, which runs on the
-host machine. The hypervisor we are going to use in this lesson is the
-Oracleâs VirtualBox.
+host machine. The hypervisor we are going to use in this lesson is the Oracle’s
+VirtualBox.
 ***** CMS VM images *****
 The most current images for CMS open data usage are described separately in the
 CERN Open Portal site for 2010 and 2011/2012. In later episodes we will be
@@ -105,8 +106,8 @@ administrative permissions on your machine in order to install it.
      ***** Find your way to install VirtualBox! *****
      Now go ahead with the installation! After you download the appropiate
      installer file, proceed as you would with any other program in your
-     system. It shouldnât take long. Afterwards, you can open the
-     program, just to test it has been intalled correctly.
+     system. It shouldn’t take long. Afterwards, you can open the program,
+     just to test it has been intalled correctly.
           ***** Meet your hypervisor *****
           If installed correctly, after opening the program a window
           similar to this one should emerge:
@@ -138,7 +139,7 @@ ready-to-run settings. The import could also be triggered directly from the
 VirtualBox interface through the File > Import Appliance menu option. But
 before that,
      make sure you unselect import hard drives as VDI on the initial
-     import screen. Otherwise, it is very likely that the VM wonât boot.
+     import screen. Otherwise, it is very likely that the VM won’t boot.
 ***** Launching the CMS VM *****
 After importing, it is likely that you will have to make at least one last
 change to the default settings before launching:
@@ -203,8 +204,8 @@ directory structure) for CMSSW, and only needs to be run once (note that it may
 take a while):
 cmsrel CMSSW_5_3_32
      Note that if you get a warning message about the current OS being
-     SLC7, you are using a wrong terminal. Open a âCMS Shellâ terminal
-     as explained above and execute the cmsrel command there.
+     SLC7, you are using a wrong terminal. Open a “CMS Shell” terminal as
+     explained above and execute the cmsrel command there.
 Change to the CMSSW_5_3_32/src/ directory:
 cd CMSSW_5_3_32/src/
 Then, run the following command to create the CMS runtime variables:
@@ -241,7 +242,7 @@ You can safely ignore the warning.
      the file locally and reverse the process to get it back to your VM.
      It could also be possible to have direct access from the host to the
      VM. This youtube_tutorial might be of help for that option.
-Before launching the job, letâs modify the configuration file (do not worry,
+Before launching the job, let’s modify the configuration file (do not worry,
 you will learn about all this stuff in a different lesson) so it is able access
 a CMS open data file and cache the conditions data. As it was mentioned, this
 will save us time later.
@@ -361,7 +362,7 @@ System                  3                   3
            simple CMSSW job.
 ===============================================================================
 
-Content licensed under CC-BY_4.0 2020â2021 by The_CMS_Collaboration
-Lesson setup licensed under CC-BY_4.0 2018â2021 by The_Carpentries
+Content licensed under CC-BY_4.0 2020–2021 by The_CMS_Collaboration
+Lesson setup licensed under CC-BY_4.0 2018–2021 by The_Carpentries
                         Edit_on_GitHub / Contributing / Source / Cite / Contact
                   Using The_Carpentries_style version 9.5.3.
