@@ -16,7 +16,7 @@ keypoints:
 
 ## Downloading the CMS-specific CernVM image
 
-Download the 2011 CMS-specific CernVM image as OVA file from the official [record](http://opendata.cern.ch/record/252) in the Cern Open Portal site. It is recommended using the version [CMS-OpenData-1.5.3](http://opendata.cern.ch/record/252/files/CMS-OpenData-1.5.3.ova). This VM Image can be used for data from 2011 and 2012, which are the data we will use in this workshop.
+Download the 2011 CMS-specific CernVM image as OVA file from the official [record](http://opendata.cern.ch/record/252) in the Cern Open Portal site. We recommend using version 1.5.3, i.e., [CMS-OpenData-1.5.3](http://opendata.cern.ch/record/252/files/CMS-OpenData-1.5.3.ova). This VM Image can be used for data from 2011 and 2012, which are the data we will use in this workshop.
 
 > Make sure to download version of the *ova* file, `1.5.3`.  Other versions are deprecated.
 {: .testimonial}
