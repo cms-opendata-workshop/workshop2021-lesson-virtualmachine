@@ -21,7 +21,7 @@ keypoints:
 
 The virtual machine we just installed provides CMS computing environment to be used with the 2011 and 2012 CMS open data. The virtual machine is based on the [CernVM](https://cernvm.cern.ch/) and uses Scientific Linux CERN.  As it was mentioned before, it comes equipped with the [ROOT](http://root.cern.ch/) framework and [CMSSW](http://cms-sw.github.io/).
 
-An important feature of the VM is the availability of the [CernVM File System](https://cernvm.cern.ch/fs/).  Thanks to the cvmfs client installed, the VM gets the CMS software (CMSSW) from the shared `/cvmfs/cms.cern.ch` area (physically at CERN but mounted locally) and the jobs, running on the CMS open data VM, read the conditions data from `/cvmfs/cms-opendata-conddb.cern.ch`. Certain kind of information, like the trigger prescales, need access to these conditions data. Access to the data itself is through [XRootD](https://xrootd.slac.stanford.edu/).
+An important feature of the VM is the availability of the [CernVM File System](https://cernvm.cern.ch/fs/).  Thanks to the cvmfs client installed, the VM gets the CMS software (CMSSW) from the shared `/cvmfs/cms.cern.ch` area (physically at CERN but mounted locally) and the jobs, running on the CMS open data VM, read the conditions data from `/cvmfs/cms-opendata-conddb.cern.ch`. Certain kind of information, like the trigger prescales, needs access to these conditions data. Access to the data itself uses the [XRootD](https://xrootd.slac.stanford.edu/) protocol.
 
 The VM has a 40G virtual hard disk and a 20G cvmfs cache, which is large enough for condition data for full event range for 2012 data (see the [CMS guide to the condition database](http://opendata.cern.ch/record/252) for further details). It has an embedded Scientific Linux CERN 6 (slc6) shell, where all CMS software specific commands should be executed. Additionally, it has a CERN Scientific Linux CERN 7 (slc7) shell, which can be used in the same session.
 
@@ -33,11 +33,11 @@ In the VM, open a terminal from the *CMS Shell* **icon from the desktop** (note 
 
 ![](../fig/rightshell.png)
 
-> **IMPORTANT NOTE**: Depending on your system, there could be some issues with the shared clipboard between the host machine and the virtual machine.  This means that it is possible that you cannot copy the instructions in this episode directly into your VM session.  The quickest workaround is to use the [text dump file](../files/lessonDump.txt) of the lesson. You can download this file directly in your VM, e.g., the `wget`  command, and follow along to copy the necessary commands directly from the text file.
+> **IMPORTANT NOTE**: Depending on your system, there could be some issues with the shared clipboard between the host machine and the virtual machine.  This means that it is possible that you cannot copy the instructions in this episode directly into your VM session.  The quickest workaround is to use the [text dump file](../files/lessonDump.txt) of the lesson. You can download this file directly in your VM using, e.g., the `wget`  command, and follow along to copy the necessary commands directly from the text file.
 {: .testimonial}
 
 > ## Alternative solution to the clipboard problem
-> Another possibility is to use the `ssh` and/or `scp` commands to copy the required files to some other machine that you have access to, from the VM as well as from the host machine.  For instance, if you had access to an `lxplus` computer at cern, you could copy a certain file from the VM to the lxplus computer.  On the VM you could do:
+> Another possibility is to use the `ssh` and/or `scp` commands to copy the required files to some other machine that you have access to, from the VM as well as from the host machine.  For instance, if you had access to an `lxplus` computer at cern (or any other machine at your institute, for instance), you could copy a certain file from the VM to the lxplus computer.  On the VM you could do:
 >
 > ~~~
 > scp myfile.txt myusername@lxplus.cern.ch:.
@@ -90,12 +90,6 @@ mkedanlzr DemoAnalyzer
 ~~~
 {: .language-bash}
 
-Come back to the main `src` area:
-
-~~~
-cd ../
-~~~
-{: .language-bash}
 
 Compile the code:
 
@@ -108,26 +102,26 @@ You can safely ignore the warning.
 
 
 
-Before launching the job, let's modify the configuration file (do not worry, you will learn about all this stuff in a different [lesson](https://cms-opendata-workshop.github.io/workshop2011-lesson-cmssw/)) so it is able access a CMS open data file and cache the conditions data.  As it was mentioned, this will save us time later.
+Before launching the job, let's modify the configuration file (do not worry, you will learn about all this stuff in a different [lesson](https://cms-opendata-workshop.github.io/workshop2021-lesson-cmssw/)) so it is able to access a CMS open data file and cache the conditions data.  As it was mentioned, this will save us time later.
 
-Open the `demoanalyzer_cfg.py` file using the `vi` editor ([here](https://www.thegeekdiary.com/basic-vi-commands-cheat-sheet/) you can find a good cheatsheet for that editor). Note that other editors like `emacs` or `nano` are also avilable in the VM.
+Open the `demoanalyzer_cfg.py` file using the `nano` editor. Note that other editors like `emacs` or `vi` are also avilable in the VM.
 
 ~~~
-vi Demo/DemoAnalyzer/demoanalyzer_cfg.py
+nano DemoAnalyzer/demoanalyzer_cfg.py
 ~~~
 {: .language-bash}
 
-Replace `'file:myfile.root'` with `'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/ElectronHad/AOD/12Oct2013-v1/20001/001F9231-F141-E311-8F76-003048F00942.root'` to point to an example file.  Note that the access to this file will be done using the `XRootD` protocol mentioned above.
+Replace `'file:myfile.root'` with `'root://eospublic.cern.ch//eos/opendata/cms/Run2012B/DoubleMuParked/AOD/22Jan2013-v1/10000/1EC938EF-ABEC-E211-94E0-90E6BA442F24.root'` to point to an example file.  Note that the access to this file will be done using the `XRootD` protocol mentioned above.
 
-Chage also the maximum number of events to 10.  I.e., change `-1`to `10` in `process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1))`.
+Change also the maximum number of events to 10.  I.e., change `-1`to `10` in `process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1))`.
 
 In addition, insert, below the *PoolSource* module, the following lines:
 
 ```
 #needed to cache the conditions data
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db')
-process.GlobalTag.globaltag = 'FT_53_LV5_AN1::All'
+process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/FT53_V21A_AN6_FULL.db')
+process.GlobalTag.globaltag = 'FT53_V21A_AN6::All'
 ```
 
 The lines above are intended to access to the *condition data*, such as the jet-energy corrections, trigger information, etc. You will learn about them in a later lesson.  Right now it is sufficient to mention that it is a good idea to cache these data already so later in the workshop we can speed up the processing.
@@ -144,13 +138,13 @@ The lines above are intended to access to the *condition data*, such as the jet-
 > process.source = cms.Source("PoolSource",
 > # replace 'myfile.root' with the source file you want to use
 >    fileNames = cms.untracked.vstring(
->        'root://eospublic.cern.ch//eos/opendata/cms/Run2011A/ElectronHad/AOD/12Oct2013-v1/20001/001F9231-F141-E311-8F76-003048F00942.root'
+>        'root://eospublic.cern.ch//eos/opendata/cms/Run2012B/DoubleMuParked/AOD/22Jan2013-v1/10000/1EC938EF-ABEC-E211-94E0-90E6BA442F24.root'
 >    )
 > )
 > #needed to cache the conditions data
 > process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-> process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db')
-> process.GlobalTag.globaltag = 'FT_53_LV5_AN1::All'
+> process.GlobalTag.connect = cms.string('sqlite_file:/cvmfs/cms-opendata-conddb.cern.ch/FT53_V21A_AN6_FULL.db')
+> process.GlobalTag.globaltag = 'FT53_V21A_AN6::All'
 >
 > process.demo = cms.EDAnalyzer('DemoAnalyzer'
 > )
@@ -163,8 +157,9 @@ The lines above are intended to access to the *condition data*, such as the jet-
 Make symbolic links to the conditions database files from cvmfs:
 
 ~~~
-ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA FT_53_LV5_AN1
-ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT_53_LV5_AN1_RUNA.db FT_53_LV5_AN1_RUNA.db
+ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT53_V21A_AN6_FULL FT53_V21A_AN6
+ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT53_V21A_AN6_FULL.db FT53_V21A_AN6_FULL.db
+ln -sf /cvmfs/cms-opendata-conddb.cern.ch/FT53_V21A_AN6_FULL FT53_V21A_AN6_FULL
 ~~~
 {: .language-bash}
 
@@ -186,27 +181,27 @@ drwxr-xr-x  4  989  984 4096 May 28  2014 cvmfs-config.cern.ch
 
 Finally, run the cms executable with our configuration (it may really **take a while**, but the next time you want to run it will be faster):
 ~~~
-cmsRun Demo/DemoAnalyzer/demoanalyzer_cfg.py
+cmsRun DemoAnalyzer/demoanalyzer_cfg.py
 ~~~
 {: .language-bash}
 
 ~~~
-%MSG-w LocalFileSystem::initFSList():  (NoModuleName) 15-Jun-2021 00:25:34 GMT  pre-events
+%MSG-w LocalFileSystem::initFSList():  (NoModuleName) 01-Jul-2021 03:49:49 GMT  pre-events
 Cannot read '/etc/mtab': Invalid argument (error 22)
 %MSG
-15-Jun-2021 01:42:26 GMT  Initiating request to open file root://eospublic.cern.ch//eos/opendata/cms/Run2011A/ElectronHad/AOD/12Oct2013-v1/20001/001F9231-F141-E311-8F76-003048F00942.root
-15-Jun-2021 01:42:35 GMT  Successfully opened file root://eospublic.cern.ch//eos/opendata/cms/Run2011A/ElectronHad/AOD/12Oct2013-v1/20001/001F9231-F141-E311-8F76-003048F00942.root
-Begin processing the 1st record. Run 166782, Event 340184599, LumiSection 309 at 15-Jun-2021 01:42:46.636 GMT
-Begin processing the 2nd record. Run 166782, Event 340185007, LumiSection 309 at 15-Jun-2021 01:42:46.637 GMT
-Begin processing the 3rd record. Run 166782, Event 340187903, LumiSection 309 at 15-Jun-2021 01:42:46.638 GMT
-Begin processing the 4th record. Run 166782, Event 340227487, LumiSection 309 at 15-Jun-2021 01:42:46.638 GMT
-Begin processing the 5th record. Run 166782, Event 340210607, LumiSection 309 at 15-Jun-2021 01:42:46.639 GMT
-Begin processing the 6th record. Run 166782, Event 340256207, LumiSection 309 at 15-Jun-2021 01:42:46.640 GMT
-Begin processing the 7th record. Run 166782, Event 340165759, LumiSection 309 at 15-Jun-2021 01:42:46.640 GMT
-Begin processing the 8th record. Run 166782, Event 340396487, LumiSection 309 at 15-Jun-2021 01:42:46.641 GMT
-Begin processing the 9th record. Run 166782, Event 340390767, LumiSection 309 at 15-Jun-2021 01:42:46.641 GMT
-Begin processing the 10th record. Run 166782, Event 340435263, LumiSection 309 at 15-Jun-2021 01:42:46.642 GMT
-15-Jun-2021 01:42:46 GMT  Closed file root://eospublic.cern.ch//eos/opendata/cms/Run2011A/ElectronHad/AOD/12Oct2013-v1/20001/001F9231-F141-E311-8F76-003048F00942.root
+01-Jul-2021 07:49:37 GMT  Initiating request to open file root://eospublic.cern.ch//eos/opendata/cms/Run2012B/DoubleMuParked/AOD/22Jan2013-v1/10000/1EC938EF-ABEC-E211-94E0-90E6BA442F24.root
+01-Jul-2021 07:49:45 GMT  Successfully opened file root://eospublic.cern.ch//eos/opendata/cms/Run2012B/DoubleMuParked/AOD/22Jan2013-v1/10000/1EC938EF-ABEC-E211-94E0-90E6BA442F24.root
+Begin processing the 1st record. Run 195013, Event 24425389, LumiSection 66 at 01-Jul-2021 07:50:01.476 GMT
+Begin processing the 2nd record. Run 195013, Event 24546773, LumiSection 66 at 01-Jul-2021 07:50:01.477 GMT
+Begin processing the 3rd record. Run 195013, Event 24679037, LumiSection 66 at 01-Jul-2021 07:50:01.478 GMT
+Begin processing the 4th record. Run 195013, Event 24839453, LumiSection 66 at 01-Jul-2021 07:50:01.478 GMT
+Begin processing the 5th record. Run 195013, Event 24894477, LumiSection 66 at 01-Jul-2021 07:50:01.478 GMT
+Begin processing the 6th record. Run 195013, Event 24980717, LumiSection 66 at 01-Jul-2021 07:50:01.479 GMT
+Begin processing the 7th record. Run 195013, Event 25112869, LumiSection 66 at 01-Jul-2021 07:50:01.479 GMT
+Begin processing the 8th record. Run 195013, Event 25484261, LumiSection 66 at 01-Jul-2021 07:50:01.480 GMT
+Begin processing the 9th record. Run 195013, Event 25702821, LumiSection 66 at 01-Jul-2021 07:50:01.480 GMT
+Begin processing the 10th record. Run 195013, Event 25961949, LumiSection 66 at 01-Jul-2021 07:50:01.481 GMT
+01-Jul-2021 07:50:01 GMT  Closed file root://eospublic.cern.ch//eos/opendata/cms/Run2012B/DoubleMuParked/AOD/22Jan2013-v1/10000/1EC938EF-ABEC-E211-94E0-90E6BA442F24.root
 
 =============================================
 
