@@ -1,4 +1,4 @@
-This lesson is still being designed and assembled (Pre-Alpha version)
+This lesson is being piloted (Beta version)
  Toggle navigation     [The_CMS_logo] Home
     * Code_of_Conduct
     * Setup
@@ -235,12 +235,18 @@ Change to the CMSSW_5_3_32/src/ directory:
 cd CMSSW_5_3_32/src/
 Then, run the following command to create the CMS runtime variables:
 cmsenv
+     ***** Work assignment *****
+     This is a good moment to go to our assignment_form and answer some
+     simple questions for this pre-exercise; you must sign in and click on
+     the submit button in order to save your work. You can come back to
+     edit the form at any time.
 Create a working directory for the demo analyzer, change to that directory and
 create a skeleton for the analyzer:
 mkdir Demo
 cd Demo
 mkedanlzr DemoAnalyzer
-Compile the code:
+Go back to the main src area and compile the code:
+cd ..
 scram b
 You can safely ignore the warning.
 Before launching the job, let’s modify the configuration file (do not worry,
@@ -249,7 +255,7 @@ access a CMS open data file and cache the conditions data. As it was mentioned,
 this will save us time later.
 Open the demoanalyzer_cfg.py file using the nano editor. Note that other
 editors like emacs or vi are also avilable in the VM.
-nano DemoAnalyzer/demoanalyzer_cfg.py
+nano Demo/DemoAnalyzer/demoanalyzer_cfg.py
 Replace 'file:myfile.root' with 'root://eospublic.cern.ch//eos/opendata/cms/
 Run2012B/DoubleMuParked/AOD/22Jan2013-v1/10000/1EC938EF-ABEC-E211-94E0-
 90E6BA442F24.root' to point to an example file. Note that the access to this
@@ -309,7 +315,7 @@ drwxr-xr-x 14  989  984 4096 Dec 16  2015 cms-opendata-conddb.cern.ch
 drwxr-xr-x  4  989  984 4096 May 28  2014 cvmfs-config.cern.ch
 Finally, run the cms executable with our configuration (it may really take a
 while, but the next time you want to run it will be faster):
-cmsRun DemoAnalyzer/demoanalyzer_cfg.py
+cmsRun Demo/DemoAnalyzer/demoanalyzer_cfg.py
 %MSG-w LocalFileSystem::initFSList():  (NoModuleName) 01-Jul-2021 03:49:49 GMT
 pre-events
 Cannot read '/etc/mtab': Invalid argument (error 22)

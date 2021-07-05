@@ -81,6 +81,11 @@ cmsenv
 ~~~
 {: .language-bash}
 
+> ## Work assignment
+>
+> This is a good moment to go to our [assignment form](https://forms.gle/DDboG1MCcSNRBRHFA) and answer some simple questions for this pre-exercise; you must sign in and <strong style="color: red;">click on the submit button</strong> in order to save your work.  You can come back to edit the form at any time.
+{: .challenge}
+
 Create a working directory for the demo analyzer, change to that directory and create a *skeleton* for the analyzer:
 
 ~~~
@@ -91,23 +96,22 @@ mkedanlzr DemoAnalyzer
 {: .language-bash}
 
 
-Compile the code:
+Go back to the main `src` area and compile the code:
 
 ~~~
+cd ..
 scram b
 ~~~
 {: .language-bash}
 
 You can safely ignore the warning.
 
-
-
 Before launching the job, let's modify the configuration file (do not worry, you will learn about all this stuff in a different [lesson](https://cms-opendata-workshop.github.io/workshop2021-lesson-cmssw/)) so it is able to access a CMS open data file and cache the conditions data.  As it was mentioned, this will save us time later.
 
 Open the `demoanalyzer_cfg.py` file using the `nano` editor. Note that other editors like `emacs` or `vi` are also avilable in the VM.
 
 ~~~
-nano DemoAnalyzer/demoanalyzer_cfg.py
+nano Demo/DemoAnalyzer/demoanalyzer_cfg.py
 ~~~
 {: .language-bash}
 
@@ -181,7 +185,7 @@ drwxr-xr-x  4  989  984 4096 May 28  2014 cvmfs-config.cern.ch
 
 Finally, run the cms executable with our configuration (it may really **take a while**, but the next time you want to run it will be faster):
 ~~~
-cmsRun DemoAnalyzer/demoanalyzer_cfg.py
+cmsRun Demo/DemoAnalyzer/demoanalyzer_cfg.py
 ~~~
 {: .language-bash}
 
