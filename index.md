@@ -5,7 +5,7 @@ permalink: index.html  # Is the only page that doesn't follow the pattern /:path
 ---
 ![](https://www.virtualbox.org/graphics/vbox_logo2_gradient.png)
 
-> Before you begin, consider working with [Docker containers](https://cms-opendata-workshop.github.io/workshop2021-lesson-docker) instead.  While virtual machines are perfectly fine and easy to work with, the container technology provides a more robust setup, particularly for large-scale processing.
+> Before you begin, please consider working with [Docker containers](https://cms-opendata-workshop.github.io/workshop2021-lesson-docker) instead. Actually, **we strongly recommend that**.  While virtual machines are fine and easy to work with, the container technology will provide a more robust setup for this workshop.
 {: .testimonial}
 
 > ## What is this lesson about?

@@ -1,4 +1,3 @@
-This lesson is being piloted (Beta version)
  Toggle navigation     [The_CMS_logo] Home
     * Code_of_Conduct
     * Setup
